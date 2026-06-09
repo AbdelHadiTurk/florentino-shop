@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  position: relative;
+  background-color: lightpink;
+  height: 75px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  padding: 0 10px;
+  width: 100%;
+}
+
+
+
+
+.florentino{
+  font-size: 40px;
+  color: white;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 10px;
+  text-decoration: none;
+
+}
+
+ .menu-icon2 {
+  width: 30px;
+  cursor: pointer;
+  padding-right: 15px; /* reduce from 35px */
+}
+
+
+.menu-icon2 span {
+  display: block;
+  height: 3px;
+  background: white;
+  margin: 5px 5px;
+}
+
+.side-menu2 {
+
+  position: fixed;
+
+  top: 0;
+
+  right: -200px; /* hidden */
+
+  width: 200px;
+
+  height: 100%;
+
+  background: #222;
+
+  padding-top: 60px;
+
+  transition: 0.3s;
+
+}
+
+/* Menu links */
+
+.side-menu2 a {
+
+  display: block;
+
+  color: white;
+
+  padding: 15px;
+
+  text-decoration: none;
+
+}
+
+.side-menu2 a:hover {
+
+  background: lightpink;
+
+}
+
+/* When active */
+
+.side-menu2.active {
+
+  right: 0;
+  background: black;
+
+}
+
+/* Smooth animation */
+.menu-icon2 span {
+  display: block;
+  height: 5px;
+  background:white ;
+  margin: 8px -10px;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Animate to X */
+.menu-icon2.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon2.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-icon2.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+.bob{
+  position: fixed;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.discr{
+  position: fixed;
+  margin-top: 400px;
+  text-align: center;
+}
