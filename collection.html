@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
     <title>Florentino Collection</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,6 +33,15 @@
       img { display: block; width: 100%; height: auto; }
       h1, h2, h3 { font-family: "Playfair Display", serif; margin: 0 0 0.75rem; line-height: 1.1; }
       .container { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+      .live-banner {
+        background: var(--foreground);
+        color: white;
+        text-align: center;
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
       .topbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
       .brand { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
       .brand .brand-mark { color: inherit; margin-right: 0.2rem; font-weight: 600; font-size: 1em; line-height: 1; }
@@ -81,6 +92,7 @@
     </style>
   </head>
   <body>
+    <div class="live-banner">Updated collection view live now</div>
     <button class="cart-trigger" id="cartTrigger" type="button" aria-label="Open cart">
       <span>🛍</span>
       <span class="cart-count-pill" id="cartCount">0</span>
