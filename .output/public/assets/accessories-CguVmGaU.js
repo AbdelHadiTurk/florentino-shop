@@ -1,0 +1,1 @@
+import{u as e}from"./index-3U5ppEMV.js";import{t}from"./CategoryPage-fMS-RSfm.js";var n=e(),r=()=>(0,n.jsx)(t,{category:`Accessories`});export{r as component};
