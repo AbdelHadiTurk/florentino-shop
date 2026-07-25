@@ -5,9 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Florentino — elegant women's fashion with dresses, knitwear, tops, bottoms, outerwear and accessories." />
     <title>Florentino — Elegant Women's Fashion</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f8f3ee;
+        --surface: #fffdf9;
+        --text: #2f241d;
+        --muted: #7c6f64;
+        --accent: #d5a88d;
+        --accent-2: #f2dfce;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+
+      .container { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(248, 243, 238, 0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(47, 36, 29, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
+
+      .brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        color: var(--muted);
+      }
+
+      .hero {
+        padding: 4rem 0 3rem;
+        background: linear-gradient(135deg, var(--accent-2), #f7efe7);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      h1, h2, h3 { line-height: 1.1; margin: 0 0 0.75rem; }
+      h1 { font-size: clamp(2.6rem, 5vw, 4.4rem); }
+      h2 { font-size: clamp(2rem, 3.2vw, 2.7rem); }
+      p { margin: 0 0 1rem; color: var(--muted); }
+
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        margin-top: 1.6rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.85rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid var(--text);
+        font-weight: 600;
+      }
+
+      .btn-primary { background: var(--text); color: #fff; }
+      .btn-secondary { background: transparent; color: var(--text); }
+
+      .card {
+        background: var(--surface);
+        border-radius: 1.5rem;
+        box-shadow: 0 18px 45px rgba(47, 36, 29, 0.08);
+        overflow: hidden;
+      }
+
+      .hero-image {
+        aspect-ratio: 4 / 5;
+        background: linear-gradient(145deg, #e9d7c7, #c69f85);
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      section { padding: 4rem 0; }
+      .section-title { text-align: center; margin-bottom: 2rem; }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .category-card {
+        padding: 1.25rem;
+        border-radius: 1.25rem;
+        background: var(--surface);
+        border: 1px solid rgba(47, 36, 29, 0.08);
+      }
+
+      .badge { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; }
+      .about, .contact, .location { background: #f3e7dc; border-radius: 1.5rem; padding: 2.5rem; }
+      .contact-links { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.3rem; }
+
+      @media (max-width: 760px) {
+        .hero-grid, .grid-3 { grid-template-columns: 1fr; }
+        .nav { flex-direction: column; gap: 0.75rem; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#home">Florentino</a>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#home">Home</a>
+          <a href="#categories">Categories</a>
+          <a href="#about">About us</a>
+          <a href="#contact">Contact</a>
+          <a href="#location">Our location</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">New Collection · SS26</span>
+            <h1>Elegance, effortlessly worn.</h1>
+            <p>Florentino curates timeless pieces for the modern woman — soft silhouettes, whispered tones, and quiet luxury.</p>
+            <div class="buttons">
+              <a class="btn btn-primary" href="#categories">Shop the collection</a>
+              <a class="btn btn-secondary" href="#about">Discover the story</a>
+            </div>
+          </div>
+          <div class="card hero-image">Florentino Edit</div>
+        </div>
+      </section>
+
+      <section id="categories">
+        <div class="container">
+          <div class="section-title">
+            <span class="badge">Explore</span>
+            <h2>Shop by Category</h2>
+            <p>Curated essentials for every moment of the day.</p>
+          </div>
+          <div class="grid-3">
+            <article class="category-card"><h3>Dresses</h3><p>Flowing silhouettes and polished finishes.</p></article>
+            <article class="category-card"><h3>Knitwear</h3><p>Soft layers made for easy elegance.</p></article>
+            <article class="category-card"><h3>Tops</h3><p>Refined staples with effortless charm.</p></article>
+            <article class="category-card"><h3>Bottoms</h3><p>Tailored cuts and graceful movement.</p></article>
+            <article class="category-card"><h3>Outerwear</h3><p>Lightweight pieces with a timeless feel.</p></article>
+            <article class="category-card"><h3>Accessories</h3><p>Details that complete the look.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container about">
+          <div class="section-title">
+            <span class="badge">About Florentino</span>
+            <h2>A love letter to feminine style</h2>
+          </div>
+          <p>Born from a passion for timeless silhouettes and soft, sun-washed tones, Florentino is a small boutique dedicated to women who dress with intention. Every piece is chosen for the way it feels against the skin, the way it moves in the light, and the way it makes you feel — quietly, undeniably beautiful.</p>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container contact">
+          <div class="section-title">
+            <span class="badge">Get in touch</span>
+            <h2>Let’s talk</h2>
+            <p>Orders, questions, styling — we’re here.</p>
+          </div>
+          <div class="contact-links">
+            <a class="btn btn-primary" href="https://wa.me/1234567890" target="_blank" rel="noreferrer">WhatsApp us</a>
+            <a class="btn btn-secondary" href="https://www.instagram.com/florentino_shop" target="_blank" rel="noreferrer">@florentino_shop</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="location">
+        <div class="container location">
+          <div class="section-title">
+            <span class="badge">Visit us</span>
+            <h2>Come say hello</h2>
+            <p>Step into our boutique and enjoy 5% off your in-store purchase. We would love to style you in person.</p>
+          </div>
+          <p style="text-align:center;">Florentino Boutique<br />123 Rue de la Mode<br />Paris, France</p>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
