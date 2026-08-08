@@ -120,48 +120,24 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     setPickErrors((e) => ({ ...e, [id]: "" }));
   }, []);
 
-
   const addToCart = useCallback(
-  (p: Product) => {
-    const sel = selection[p.id] || { color: "", size: "" };
-
-    if (!sel.color || !sel.size) {
-      setPickErrors((e) => ({
-        ...e,
-        [p.id]: "Please select color and size",
-      }));
-      return;
-    }
-
-    setCart((c) => {
-      const newItem: CartItem = {
-        kind: "single",
-        product: p,
-        color: sel.color,
-        size: sel.size,
-        qty: 1,
-      };
-
-      const k = cartKey(newItem);
-      const found = c.find((i) => cartKey(i) === k);
-
-      if (found) {
-        return c.map((i) =>
-          cartKey(i) === k
-            ? { ...i, qty: i.qty + 1 }
-            : i
-        );
+    (p: Product) => {
+      const sel = selection[p.id] || { color: "", size: "" };
+      if (!sel.color || !sel.size) {
+        setPickErrors((e) => ({ ...e, [p.id]: "Please select color and size" }));
+        return;
       }
-
-      return [...c, newItem];
-    });
-
-    setCartOpen(true);
-  },
-  [selection]
-);
-
-
+      setCart((c) => {
+        const newItem: CartItem = { kind: "single", product: p, color: sel.color, size: sel.size, qty: 1 };
+        const k = cartKey(newItem);
+        const found = c.find((i) => cartKey(i) === k);
+        if (found) return c.map((i) => (cartKey(i) === k ? { ...i, qty: i.qty + 1 } : i));
+        return [...c, newItem];
+      });
+      setCartOpen(true);
+    },
+    [selection]
+  );
 
   const addOutfitToCart = useCallback(
     (o: Outfit) => {
