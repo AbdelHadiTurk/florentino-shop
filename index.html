@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta name="description" content="Florentino — feminine, elegant clothing for the modern woman. Shop dresses, knits, tops and more." />
+    <title>Florentino — Elegant Women's Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --background: #f7f0e8;
+        --foreground: #2f241d;
+        --muted: #6f6258;
+        --surface: #fffdf9;
+        --border: #e9dacc;
+        --blush: #ecd4cb;
+        --nude: #e6d9c9;
+        --sand: #efe2ce;
+        --accent: #c8926f;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.6;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; width: 100%; height: auto; }
+      h1, h2, h3, .brand { font-family: "Playfair Display", serif; margin: 0 0 0.75rem; line-height: 1.1; }
+      body, p, .nav-links, .btn, .subtle, .product-card p, .category-card p { font-family: "Poppins", sans-serif; }
+      p { margin: 0 0 1rem; color: var(--muted); }
+      .container { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+      .live-banner {
+        background: var(--foreground);
+        color: white;
+        text-align: center;
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(247, 240, 232, 0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(47, 36, 29, 0.08);
+      }
+      .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; gap: 1rem; }
+      .brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .brand .brand-mark {
+        display: inline-block;
+        margin-right: 0.2rem;
+        color: inherit;
+        font-weight: 600;
+        font-size: 1em;
+        line-height: 1;
+      }
+      .nav-links { display: flex; flex-wrap: wrap; gap: 1.1rem; color: var(--muted); }
+      .dropdown { position: relative; }
+      .dropdown-toggle {
+        background: none;
+        border: 0;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+      .dropdown-menu {
+        position: absolute;
+        left: 0;
+        top: calc(100% + 0.6rem);
+        display: none;
+        min-width: 180px;
+        padding: 0.35rem 0;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        box-shadow: 0 12px 30px rgba(47, 36, 29, 0.08);
+      }
+      .dropdown.open .dropdown-menu { display: block; }
+      .dropdown-menu a { display: block; padding: 0.6rem 0.9rem; color: var(--foreground); }
+      .dropdown-menu a:hover { background: var(--sand); }
+      .category-card[id] { scroll-margin-top: 6rem; }
+      .cart-trigger {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 45;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.8rem;
+        height: 2.8rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--foreground);
+        font-size: 1.05rem;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(47, 36, 29, 0.08);
+      }
+      .cart-count-pill {
+        position: absolute;
+        top: -0.3rem;
+        right: -0.3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.2rem;
+        height: 1.2rem;
+        padding: 0 0.26rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .cart-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(47, 36, 29, 0.32);
+      }
+      .cart-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 50;
+        width: min(420px, 100vw);
+        height: 100vh;
+        padding: 1.2rem;
+        background: var(--surface);
+        border-left: 1px solid var(--border);
+        box-shadow: -12px 0 30px rgba(47, 36, 29, 0.12);
+        transform: translateX(105%);
+        transition: transform 220ms ease;
+        overflow-y: auto;
+      }
+      .cart-panel.open { transform: translateX(0); }
+      .cart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+      .cart-close { border: 0; background: transparent; font-size: 1.5rem; cursor: pointer; color: var(--foreground); }
+      .cart-items { display: grid; gap: 0.75rem; margin-bottom: 1rem; }
+      .cart-item { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--border); border-radius: 1rem; background: #fff; }
+      .cart-item strong { display: block; margin-bottom: 0.2rem; }
+      .cart-item small { color: var(--muted); }
+      .cart-quantity { display: inline-flex; align-items: center; gap: 0.3rem; }
+      .qty-btn { width: 1.8rem; height: 1.8rem; border: 1px solid var(--border); background: var(--background); border-radius: 999px; cursor: pointer; }
+      .empty-cart { color: var(--muted); padding: 1rem 0; }
+      .order-form { display: grid; gap: 0.75rem; }
+      .order-form label { display: grid; gap: 0.35rem; color: var(--foreground); font-size: 0.95rem; }
+      .order-form input, .order-form textarea { border: 1px solid var(--border); border-radius: 0.9rem; padding: 0.8rem 0.9rem; font: inherit; background: white; }
+      .order-form textarea { resize: vertical; min-height: 5rem; }
+      .add-to-cart-btn { margin-top: 0.8rem; width: 100%; border: 0; border-radius: 999px; padding: 0.65rem 0.9rem; background: var(--foreground); color: white; font: inherit; font-weight: 600; cursor: pointer; }
+      body.cart-open { overflow: hidden; }
+      .hero { padding: 4rem 0 3.25rem; background: linear-gradient(135deg, var(--blush), var(--nude)); }
+      .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: center; }
+      .eyebrow { display: inline-block; margin-bottom: 1rem; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+      .hero h1 { font-size: clamp(2.6rem, 5vw, 4.6rem); }
+      .hero .lead { font-size: 1.02rem; max-width: 34rem; }
+      .buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.78rem 1.25rem; border-radius: 999px; font-size: 0.86rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--foreground); transition: transform 180ms ease, box-shadow 180ms ease; }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { background: var(--foreground); color: white; }
+      .btn-outline { color: var(--foreground); background: transparent; }
+      .card { background: var(--surface); border-radius: 1.5rem; overflow: hidden; box-shadow: 0 18px 45px rgba(47, 36, 29, 0.08); }
+      .hero-card { aspect-ratio: 4 / 5; }
+      .hero-card img { height: 100%; object-fit: cover; }
+      section { padding: 4rem 0; }
+      section[id] { scroll-margin-top: 6rem; }
+      .section-title { text-align: center; margin-bottom: 2rem; }
+      .section-title h2 { font-size: clamp(2rem, 3.2vw, 2.6rem); }
+      .badge { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent); }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+      .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+      .product-card, .category-card { background: var(--surface); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; }
+      .collection-link-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0.8rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 999px;
+        background: var(--foreground);
+        color: white;
+        font: inherit;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .product-card img { aspect-ratio: 4 / 5; object-fit: cover; }
+      .product-body, .category-body { padding: 1rem 1rem 1.2rem; }
+      .selector-row { display: grid; gap: 0.45rem; margin: 0.6rem 0 0.8rem; }
+      .selector-row label { display: grid; gap: 0.3rem; font-size: 0.9rem; color: var(--muted); }
+      .option-group { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+      .option-pill {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: white;
+        color: var(--foreground);
+        padding: 0.35rem 0.65rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        user-select: none;
+      }
+      .option-pill.active { background: var(--foreground); color: white; border-color: var(--foreground); }
+      .product-card h3, .category-card h3 { font-size: 1.1rem; margin-bottom: 0.35rem; }
+      .product-card .price { font-weight: 600; color: var(--foreground); }
+      .category-card { min-height: 100%; }
+      .category-card img { aspect-ratio: 1.1; object-fit: cover; }
+      .category-card .subtle { color: var(--muted); font-size: 0.95rem; }
+      .about, .contact, .location { background: #f0e1d4; border-radius: 1.5rem; padding: 2.5rem; }
+      .contact-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+      .location-card { position: relative; overflow: hidden; background: var(--surface); border-radius: 1.5rem; padding: 2rem; border: 1px solid var(--border); }
+      .location-badge { position: absolute; top: 0; right: 0; background: var(--foreground); color: var(--surface); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 0.8rem; border-bottom-left-radius: 1rem; }
+      .footer { padding: 2rem 0 3rem; text-align: center; color: var(--muted); font-size: 0.95rem; }
+      @media (max-width: 900px) { .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hero-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 680px) { .grid-3, .product-grid { grid-template-columns: 1fr; } .nav { flex-direction: column; align-items: flex-start; } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#home"><span class="brand-mark">F</span>lorentino</a>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#home">Home</a>
+          <div class="dropdown" id="categoriesDropdown">
+            <button class="dropdown-toggle" type="button" aria-expanded="false" aria-controls="categoriesMenu">Categories</button>
+            <div class="dropdown-menu" id="categoriesMenu">
+              <a href="collection.html?category=dresses">Dresses</a>
+              <a href="collection.html?category=knitwear">Knitwear</a>
+              <a href="collection.html?category=tops">Tops</a>
+              <a href="collection.html?category=bottoms">Bottoms</a>
+              <a href="collection.html?category=outerwear">Outerwear</a>
+              <a href="collection.html?category=accessories">Accessories</a>
+            </div>
+          </div>
+          <a href="#outfits-section">Outfits</a>
+          <a href="#about">About us</a>
+          <a href="#location">Our location</a>
+        </nav>
+      </div>
+    </header>
+
+    <button class="cart-trigger" id="cartTrigger" type="button" aria-label="Open cart">
+      <span>🛍</span>
+      <span class="cart-count-pill" id="cartCount">0</span>
+    </button>
+
+    <div class="cart-overlay" id="cartOverlay" hidden></div>
+
+    <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+      <div class="cart-header">
+        <div>
+          <p class="badge">Your order</p>
+          <h3>Shopping cart</h3>
+        </div>
+        <button class="cart-close" id="closeCart" type="button" aria-label="Close cart">×</button>
+      </div>
+      <div id="cartItems" class="cart-items">
+        <p class="empty-cart">Your cart is empty.</p>
+      </div>
+      <form id="orderForm" class="order-form">
+        <label>
+          <span>Your name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Phone number</span>
+          <input name="phone" required placeholder="+961 03 505664" />
+        </label>
+        <label>
+          <span>Delivery address</span>
+          <input name="address" placeholder="City/Street/building" required/>
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" rows="3" placeholder="Any details for your order?"></textarea>
+        </label>
+        <button class="btn btn-primary" type="submit">Send order via WhatsApp</button>
+      </form>
+    </aside>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">New Collection · SS26</span>
+            <h1>Elegance, effortlessly worn.</h1>
+            <p class="lead">Florentino curates timeless pieces for the modern woman — soft silhouettes, whispered tones, and quiet luxury.</p>
+            <div class="buttons">
+              <a class="btn btn-primary" href="#categories">Shop best sellers</a>
+              <a class="btn btn-outline" href="#about">Browse dresses</a>
+            </div>
+          </div>
+          <div class="card hero-card">
+            <img src="src/assets/hero.jpg" alt="Florentino hero fashion collection" />
+          </div>
+        </div>
+      </section>
+
+      <section id="categories">
+        <div class="container">
+          <div class="section-title">
+            <span class="badge">Loved by all</span>
+            <h2>Best Sellers</h2>
+            <p>The pieces our community keeps coming back to — timeless, adored, and ready to wear.</p>
+          </div>
+          <div class="product-grid">
+            <article class="product-card">
+              <img src="src/assets/product-1.jpg" alt="Bella Knit Sweater" />
+              <div class="product-body">
+                <h3>Bella Knit Sweater</h3>
+                <p>Soft knit with an effortless drape.</p>
+                <div class="price">$68</div>
+                <div class="selector-row">
+                  <label>
+                    <span>Size</span>
+                    <div class="option-group" data-role="size">
+                      <button class="option-pill" type="button" data-value="XS">XS</button>
+                      <button class="option-pill" type="button" data-value="S">S</button>
+                      <button class="option-pill" type="button" data-value="M">M</button>
+                      <button class="option-pill" type="button" data-value="L">L</button>
+                    </div>
+                  </label>
+                  <label>
+                    <span>Color</span>
+                    <div class="option-group" data-role="color">
+                      <button class="option-pill" type="button" data-value="Ivory">Ivory</button>
+                      <button class="option-pill" type="button" data-value="Rose">Rose</button>
+                      <button class="option-pill" type="button" data-value="Sand">Sand</button>
+                    </div>
+                  </label>
+                </div>
+                <button class="add-to-cart-btn" type="button" data-name="Bella Knit Sweater" data-price="$68">Add to cart</button>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="src/assets/product-2.jpg" alt="Rosé Chiffon Dress" />
+              <div class="product-body">
+                <h3>Rosé Chiffon Dress</h3>
+                <p>Fluid movement and polished ease.</p>
+                <div class="price">$89</div>
+                <div class="selector-row">
+                  <label>
+                    <span>Size</span>
+                    <div class="option-group" data-role="size">
+                      <button class="option-pill" type="button" data-value="XS">XS</button>
+                      <button class="option-pill" type="button" data-value="S">S</button>
+                      <button class="option-pill" type="button" data-value="M">M</button>
+                      <button class="option-pill" type="button" data-value="L">L</button>
+                    </div>
+                  </label>
+                  <label>
+                    <span>Color</span>
+                    <div class="option-group" data-role="color">
+                      <button class="option-pill" type="button" data-value="Ivory">Ivory</button>
+                      <button class="option-pill" type="button" data-value="Rose">Rose</button>
+                      <button class="option-pill" type="button" data-value="Sand">Sand</button>
+                    </div>
+                  </label>
+                </div>
+                <button class="add-to-cart-btn" type="button" data-name="Rosé Chiffon Dress" data-price="$89">Add to cart</button>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="src/assets/product-3.jpg" alt="Satin Blouse Ivory" />
+              <div class="product-body">
+                <h3>Satin Blouse Ivory</h3>
+                <p>Refined texture with a graceful finish.</p>
+                <div class="price">$54</div>
+                <div class="selector-row">
+                  <label>
+                    <span>Size</span>
+                    <div class="option-group" data-role="size">
+                      <button class="option-pill" type="button" data-value="XS">XS</button>
+                      <button class="option-pill" type="button" data-value="S">S</button>
+                      <button class="option-pill" type="button" data-value="M">M</button>
+                      <button class="option-pill" type="button" data-value="L">L</button>
+                    </div>
+                  </label>
+                  <label>
+                    <span>Color</span>
+                    <div class="option-group" data-role="color">
+                      <button class="option-pill" type="button" data-value="Ivory">Ivory</button>
+                      <button class="option-pill" type="button" data-value="Rose">Rose</button>
+                      <button class="option-pill" type="button" data-value="Sand">Sand</button>
+                    </div>
+                  </label>
+                </div>
+                <button class="add-to-cart-btn" type="button" data-name="Satin Blouse Ivory" data-price="$54">Add to cart</button>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="src/assets/product-4.jpg" alt="Cream Wide-Leg Trousers" />
+              <div class="product-body">
+                <h3>Cream Wide-Leg Trousers</h3>
+                <p>Tailored structure and effortless silhouette.</p>
+                <div class="price">$72</div>
+                <div class="selector-row">
+                  <label>
+                    <span>Size</span>
+                    <div class="option-group" data-role="size">
+                      <button class="option-pill" type="button" data-value="XS">XS</button>
+                      <button class="option-pill" type="button" data-value="S">S</button>
+                      <button class="option-pill" type="button" data-value="M">M</button>
+                      <button class="option-pill" type="button" data-value="L">L</button>
+                    </div>
+                  </label>
+                  <label>
+                    <span>Color</span>
+                    <div class="option-group" data-role="color">
+                      <button class="option-pill" type="button" data-value="Ivory">Ivory</button>
+                      <button class="option-pill" type="button" data-value="Rose">Rose</button>
+                      <button class="option-pill" type="button" data-value="Sand">Sand</button>
+                    </div>
+                  </label>
+                </div>
+                <button class="add-to-cart-btn" type="button" data-name="Cream Wide-Leg Trousers" data-price="$72">Add to cart</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="outfits-section" style="padding-top: 0.5rem;" data-section="outfits">
+        <div class="container">
+          <div class="section-title">
+            <span class="badge">Explore</span>
+            <h2>Shop by Category</h2>
+          </div>
+          <div class="grid-3">
+            <article class="category-card" id="dresses">
+              <img src="src/assets/product-2.jpg" alt="Dresses" />
+              <div class="category-body">
+                <h3>Dresses</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=dresses">See collection</a>
+              </div>
+            </article>
+            <article class="category-card" id="knitwear">
+              <img src="src/assets/product-1.jpg" alt="Knitwear" />
+              <div class="category-body">
+                <h3>Knitwear</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=knitwear">See collection</a>
+              </div>
+            </article>
+            <article class="category-card" id="tops">
+              <img src="src/assets/product-3.jpg" alt="Tops" />
+              <div class="category-body">
+                <h3>Tops</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=tops">See collection</a>
+              </div>
+            </article>
+            <article class="category-card" id="bottoms">
+              <img src="src/assets/product-4.jpg" alt="Bottoms" />
+              <div class="category-body">
+                <h3>Bottoms</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=bottoms">See collection</a>
+              </div>
+            </article>
+            <article class="category-card" id="outerwear">
+              <img src="src/assets/product-6.jpg" alt="Outerwear" />
+              <div class="category-body">
+                <h3>Outerwear</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=outerwear">See collection</a>
+              </div>
+            </article>
+            <article class="category-card" id="accessories">
+              <img src="src/assets/product-5.jpg" alt="Accessories" />
+              <div class="category-body">
+                <h3>Accessories</h3>
+                <p class="subtle">Shop now →</p>
+                <a class="collection-link-btn" href="collection.html?category=accessories">See collection</a>
+              </div>
+            </article>
+            <article class="category-card">
+              <img src="src/assets/product-6.jpg" alt="Outfits" />
+              <div class="category-body">
+                <h3>Outfits</h3>
+                <p class="subtle">Save 15% →</p>
+                <a class="collection-link-btn" href="collection.html?category=outfits">See collection</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container about">
+          <div class="section-title">
+            <span class="badge">About Florentino</span>
+            <h2>A love letter to feminine style</h2>
+          </div>
+          <p>Born from a passion for timeless silhouettes and soft, sun-washed tones, Florentino is a small boutique dedicated to women who dress with intention. Every piece is chosen for the way it feels against the skin, the way it moves in the light, and the way it makes you feel — quietly, undeniably beautiful.</p>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container contact">
+          <div class="section-title">
+            <span class="badge">Get in touch</span>
+            <h2>Let’s talk</h2>
+            <p>Orders, questions, styling — we’re here.</p>
+          </div>
+          <div class="contact-links">
+            <a class="btn btn-primary" href="https://wa.me/96103505664" target="_blank" rel="noreferrer">WhatsApp us</a>
+            <a class="btn btn-outline" href="https://www.instagram.com/florentino_shop" target="_blank" rel="noreferrer">@florentino_shop</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="location">
+        <div class="container location">
+          <div class="section-title">
+            <span class="badge">Visit us</span>
+            <h2>Come say hello</h2>
+            <p>Step into our boutique and enjoy 5% off your in-store purchase. We would love to style you in person.</p>
+          </div>
+          <div class="location-card">
+            <span class="location-badge">5% Off</span>
+            <p style="text-align:center; margin-bottom:0;">Florentino Boutique<br />123 Rue de la Mode<br />Paris, France</p>
+            <div class="buttons" style="justify-content:center; margin-top:1.25rem;">
+              <a class="btn btn-primary" href="https://maps.app.goo.gl/ZpSJ7op9a9AX3EZP8?g_st=ic" target="_blank" rel="noreferrer">Open in Google Maps</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      © <span id="year"></span> Florentino. Crafted with love.
+    </footer>
+
+    
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const cartState = [];
+  const cartTrigger = document.getElementById('cartTrigger');
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartPanel = document.getElementById('cartPanel');
+  const closeCart = document.getElementById('closeCart');
+  const cartCount = document.getElementById('cartCount');
+  const cartItems = document.getElementById('cartItems');
+  const orderForm = document.getElementById('orderForm');
+
+  function openCart() {
+    cartPanel.classList.add('open');
+    cartPanel.setAttribute('aria-hidden', 'false');
+    cartOverlay.hidden = false;
+    document.body.classList.add('cart-open');
+  }
+
+  function closeCartPanel() {
+    cartPanel.classList.remove('open');
+    cartPanel.setAttribute('aria-hidden', 'true');
+    cartOverlay.hidden = true;
+    document.body.classList.remove('cart-open');
+  }
+
+  function renderCart() {
+    const totalItems = cartState.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+
+    cartCount.textContent = totalItems;
+
+    if (!cartState.length) {
+      cartItems.innerHTML =
+        '<p class="empty-cart">Your cart is empty.</p>';
+      return;
+    }
+
+    cartItems.innerHTML = cartState
+      .map(
+        (item, index) => `
+          <div class="cart-item">
+            <div>
+              <strong>${item.name}</strong>
+              <small>
+                Color: ${item.color} · Size: ${item.size}
+              </small>
+              <small>${item.price}</small>
+            </div>
+
+            <div class="cart-quantity">
+              <button
+                class="qty-btn"
+                type="button"
+                data-action="decrease"
+                data-index="${index}"
+              >
+                −
+              </button>
+
+              <span>${item.quantity}</span>
+
+              <button
+                class="qty-btn"
+                type="button"
+                data-action="increase"
+                data-index="${index}"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        `
+      )
+      .join('');
+
+    cartItems.querySelectorAll('[data-action]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = Number(
+          button.getAttribute('data-index')
+        );
+
+        const action = button.getAttribute('data-action');
+
+        if (action === 'increase') {
+          cartState[index].quantity += 1;
+        } else if (action === 'decrease') {
+          if (cartState[index].quantity > 1) {
+            cartState[index].quantity -= 1;
+          } else {
+            cartState.splice(index, 1);
+          }
+        }
+
+        renderCart();
+      });
+    });
+  }
+
+  function addToCart(name, price, size, color) {
+    const existing = cartState.find(
+      (item) =>
+        item.name === name &&
+        item.size === size &&
+        item.color === color
+    );
+
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cartState.push({
+        name,
+        price,
+        size,
+        color,
+        quantity: 1,
+      });
+    }
+
+    renderCart();
+    openCart();
+  }
+
+  document.querySelectorAll('.product-card').forEach((card) => {
+    const button = card.querySelector('[data-name]');
+    const sizeGroup = card.querySelector('[data-role="size"]');
+    const colorGroup = card.querySelector('[data-role="color"]');
+
+    sizeGroup?.querySelectorAll('.option-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        sizeGroup
+          .querySelectorAll('.option-pill')
+          .forEach((item) => item.classList.remove('active'));
+
+        pill.classList.add('active');
+      });
+    });
+
+    colorGroup?.querySelectorAll('.option-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        colorGroup
+          .querySelectorAll('.option-pill')
+          .forEach((item) => item.classList.remove('active'));
+
+        pill.classList.add('active');
+      });
+    });
+
+    button?.addEventListener('click', () => {
+      const size =
+        sizeGroup
+          ?.querySelector('.option-pill.active')
+          ?.getAttribute('data-value') || '';
+
+      const color =
+        colorGroup
+          ?.querySelector('.option-pill.active')
+          ?.getAttribute('data-value') || '';
+
+      if (!size || !color) {
+        window.alert('Please select a size and color first.');
+        return;
+      }
+
+      addToCart(
+        button.getAttribute('data-name'),
+        button.getAttribute('data-price'),
+        size,
+        color
+      );
+    });
+  });
+
+  cartTrigger?.addEventListener('click', openCart);
+  closeCart?.addEventListener('click', closeCartPanel);
+  cartOverlay?.addEventListener('click', closeCartPanel);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeCartPanel();
+    }
+  });
+
+  orderForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (!cartState.length) {
+      window.alert(
+        'Please add at least one item to your cart first.'
+      );
+      return;
+    }
+
+    const formData = new FormData(orderForm);
+
+    const customerName = String(
+      formData.get('name') || ''
+    ).trim();
+
+    const phone = String(
+      formData.get('phone') || ''
+    ).trim();
+
+    const address = String(
+      formData.get('address') || ''
+    ).trim();
+
+    const notes = String(
+      formData.get('notes') || ''
+    ).trim();
+
+    if (!customerName || !phone) {
+      window.alert(
+        'Please add your name and phone number so we can contact you.'
+      );
+      return;
+    }
+
+    const itemsText = cartState
+      .map(
+        (item) =>
+          `• ${item.quantity} × ${item.name} — Color: ${item.color}, Size: ${item.size} — ${item.price}`
+      )
+      .join('\n');
+
+    const message =
+      `Hello Florentino! I would like to place an order.\n\n` +
+      `Customer: ${customerName}\n` +
+      `Phone: ${phone}\n` +
+      `Address: ${address || 'Not provided'}\n` +
+      `Notes: ${notes || 'No notes'}\n\n` +
+      `Items:\n${itemsText}`;
+
+    const whatsappUrl =
+      `https://wa.me/96103505664?text=` +
+      encodeURIComponent(message);
+
+    window.open(
+      whatsappUrl,
+      '_blank',
+      'noopener,noreferrer'
+    );
+
+    cartState.splice(0, cartState.length);
+    renderCart();
+    closeCartPanel();
+    orderForm.reset();
+  });
+
+  renderCart();
+</script>
+
+
+  </body>
+</html>
